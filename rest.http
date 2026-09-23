@@ -1,0 +1,41 @@
+@url=https://rqms.loyar.biz
+
+
+POST {{url}}/api/topup
+Accept: application/json
+Content-Type: application/json
+
+{
+    "phone": "974376772",
+    "amount": 500,
+    "operator": 1,
+    "key": "loyartopupkey",
+}
+
+###
+
+@sms_url = http://159.138.135.30/smsserver/sendsms-token
+@api_key = lKwrR0do7Ncd8ebzire137tt
+
+POST {{sms_url}}
+Authorization: Bearer {{api_key}}
+Content-Type: application/json
+
+{    
+    "to": "09773633278",
+    "message": "Your Loyar Topup is successful. Amount: 500",
+    "sender": "LOYAR"
+}
+
+# (
+#     [id] => 1654236377418
+#     [resultcode] => 001
+#     [status] => success
+#     [description] => Transactions Success.
+#     [create_at] => 1654236377418
+#     [message_to] => 09773633278
+#     [message_text] => မင်္ဂလာပါ (name) (count) သဘောထားဆန္ဒပြုရန် အောက်ပါ Link ကို နှိပ်ပါ။ http://localhost/app/H1f0
+#     [operator] => Telenor
+#     [sender] => LOYAR
+#     [credit] => 2
+# )

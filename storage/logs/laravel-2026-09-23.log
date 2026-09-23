@@ -1,0 +1,16 @@
+[2026-09-23 12:34:30] production.ERROR: rename(C:\MyWorkspace\MTI\MMVote\server-projects\mmvote-server-9-23-26\bootstrap\cache\pac83AF.tmp,C:\MyWorkspace\MTI\MMVote\server-projects\mmvote-server-9-23-26\bootstrap\cache/packages.php): Access is denied (code: 5) {"exception":"[object] (ErrorException(code: 0): rename(C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\bootstrap\\cache\\pac83AF.tmp,C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\bootstrap\\cache/packages.php): Access is denied (code: 5) at C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php:211)
+[stacktrace]
+#0 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'rename(C:\\\\MyWor...', 'C:\\\\MyWorkspace\\\\...', 211)
+#1 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(211): rename('C:\\\\MyWorkspace\\\\...', 'C:\\\\MyWorkspace\\\\...')
+#2 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\PackageManifest.php(180): Illuminate\\Filesystem\\Filesystem->replace('C:\\\\MyWorkspace\\\\...', '<?php return ar...')
+#3 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\PackageManifest.php(130): Illuminate\\Foundation\\PackageManifest->write(Array)
+#4 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\PackageManifest.php(106): Illuminate\\Foundation\\PackageManifest->build()
+#5 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\PackageManifest.php(89): Illuminate\\Foundation\\PackageManifest->getManifest()
+#6 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\PackageManifest.php(78): Illuminate\\Foundation\\PackageManifest->config('aliases')
+#7 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterFacades.php(26): Illuminate\\Foundation\\PackageManifest->aliases()
+#8 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterFacades->bootstrap(Object(Illuminate\\Foundation\\Application))
+#9 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#10 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#11 C:\\MyWorkspace\\MTI\\MMVote\\server-projects\\mmvote-server-9-23-26\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#12 {main}
+"} 
