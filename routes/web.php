@@ -196,6 +196,7 @@ Route::group(['middleware' => 'setting'], function () {
 
             Route::get('/voting/result/candidate-download', 'Admin\VotingController@get_candidateList')->name('admin.candidate-excel.download');
             Route::get('/voting/result/question-download/{election_id}', 'Admin\VotingController@get_questionList')->name('admin.question-excel.download');
+            Route::get('/voting/result/question-pdf/{election_id}', 'Admin\VotingController@get_questionListPdf')->name('admin.question-pdf.download');
             Route::get('/voting/result/get-result', 'Admin\VotingController@get_result')->name('admin.election.get-result');
             Route::get('/voting/result/get-ques-result', 'Admin\VotingController@get_ques_result')->name('admin.election.get-ques-result');
             Route::get('/voting/votingresult/candidate-result/detail/{candidate_id}/{election_id}', 'Admin\VotingController@votingresultshow')->name('admin.election.votingresult.show')->middleware('superadmin');

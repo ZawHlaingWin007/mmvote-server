@@ -512,6 +512,7 @@
                         type: action,
                         method: method,
                         check_val: checkData,
+                        election_id: $("#electionid").val(),
                         _token: '{{ csrf_token() }}'
                     },
                     dataType: "json",
@@ -781,6 +782,10 @@
 
             $("form#reminder").on("submit", function(e) {
                 e.preventDefault();
+                if (!$("#electionid").val()) {
+                    toastr.error("Please Select Election First!");
+                    return false;
+                }
                 $('input[name=action]').val('all_reminder');
                 $("#confirmModal").modal('show');
             })

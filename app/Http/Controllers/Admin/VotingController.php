@@ -6,6 +6,7 @@ use App\Answer;
 use App\Candidate;
 use App\Election;
 use App\Exports\QuestionVotingResultExport;
+use App\Services\QuestionVotingResultPdfGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Question;
@@ -192,6 +193,11 @@ class VotingController extends Controller
     public function get_questionList($election_id)
     {
         return Excel::download(new QuestionVotingResultExport($election_id), "ques_voting_result.xlsx");
+    }
+
+    public function get_questionListPdf($election_id)
+    {
+        return QuestionVotingResultPdfGenerator::downloadResponse((int) $election_id);
     }
 
     public function get_result()

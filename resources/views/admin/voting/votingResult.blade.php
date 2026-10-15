@@ -32,6 +32,10 @@
                                 @if ($election->candidate_flag == 1 && $election->ques_flag == 1)
                                     <a class="btn btn-flat btn-success" data-toggle="modal" data-target="#confirmModal"><i
                                             class="fa fa-download" aria-hidden="true"></i> Download Excel </a>
+                                    <a href="{{ route('admin.question-pdf.download', ['election_id' => $election->id]) }}"
+                                        class="btn btn-flat btn-danger js-file-download"
+                                        data-download-name="ques_voting_result.pdf"><i class="fa fa-file-pdf-o"
+                                            aria-hidden="true"></i> Download PDF </a>
                                     <button type="button" class="btn btn-flat btn-info" data-toggle="modal"
                                         data-target="#print_confirmModal"><i class="fa fa-print" aria-hidden="true"></i>
                                         Print</button>
@@ -42,8 +46,13 @@
                                             class="fa fa-print" aria-hidden="true"></i> Print</button>
                                 @else
                                     <a href="{{ route('admin.question-excel.download', ['election_id' => $election->id]) }}"
-                                        class="btn btn-flat btn-success"><i class="fa fa-download" aria-hidden="true"></i>
-                                        Download Excel </a>
+                                        class="btn btn-flat btn-success js-file-download"
+                                        data-download-name="ques_voting_result.xlsx"><i class="fa fa-download"
+                                            aria-hidden="true"></i> Download Excel </a>
+                                    <a href="{{ route('admin.question-pdf.download', ['election_id' => $election->id]) }}"
+                                        class="btn btn-flat btn-danger js-file-download"
+                                        data-download-name="ques_voting_result.pdf"><i class="fa fa-file-pdf-o"
+                                            aria-hidden="true"></i> Download PDF </a>
                                     <button type="button" id="btn_question_print" class="btn btn-flat btn-info"><i
                                             class="fa fa-print" aria-hidden="true"></i> Print</button>
                                 @endif
@@ -353,6 +362,77 @@
     <script>
         $(document).ready(function() {
 
+            function setDownloadLoading($el, loading) {
+                if (!$el.data('original-html')) {
+                    $el.data('original-html', $el.html());
+                }
+
+                if (loading) {
+                    $el.data('loading', true);
+                    $el.addClass('disabled').attr('aria-disabled', 'true');
+                    if ($el.is('a')) {
+                        $el.css('pointer-events', 'none');
+                    }
+                    $el.html('<i class="fa fa-spinner fa-spin"></i> Downloading...');
+                    return;
+                }
+
+                $el.data('loading', false);
+                $el.removeClass('disabled').removeAttr('aria-disabled');
+                if ($el.is('a')) {
+                    $el.css('pointer-events', '');
+                }
+                $el.html($el.data('original-html'));
+            }
+
+            $(document).on('click', '.js-file-download', function(e) {
+                e.preventDefault();
+
+                var $btn = $(this);
+                if ($btn.data('loading')) {
+                    return;
+                }
+
+                var url = $btn.attr('href');
+                var filename = $btn.data('download-name') || 'download';
+
+                setDownloadLoading($btn, true);
+
+                fetch(url, {
+                        credentials: 'same-origin',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(function(response) {
+                        if (!response.ok) {
+                            throw new Error('Download failed');
+                        }
+
+                        var disposition = response.headers.get('Content-Disposition') || '';
+                        var match = disposition.match(/filename=\"?([^\";]+)\"?/i);
+                        if (match && match[1]) {
+                            filename = match[1];
+                        }
+
+                        return response.blob();
+                    })
+                    .then(function(blob) {
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = filename;
+                        document.body.appendChild(link);
+                        link.click();
+                        link.remove();
+                    })
+                    .catch(function() {
+                        alert('Download failed. Please try again.');
+                    })
+                    .finally(function() {
+                        setDownloadLoading($btn, false);
+                    });
+            });
+
             let candidate_flag = "{{ $election->candidate_flag }}";
             let ques_flag = "{{ $election->ques_flag }}";
 
@@ -545,6 +625,11 @@
             })
 
             $("#btn_downloadExcel").click(function() {
+                var $btn = $(this);
+                if ($btn.data('loading')) {
+                    return;
+                }
+
                 if (candidate_flag == 1 && ques_flag == 1) {
                     var type = $('input[name=type]').val();
                 } else if (candidate_flag == 1) {
@@ -554,6 +639,8 @@
                 }
 
                 let count = $('input[name=count]').val();
+                setDownloadLoading($btn, true);
+
                 $.ajax({
                     type: "get",
                     url: type == 'candidate' ? "{{ route('admin.candidate-excel.download') }}" :
@@ -616,6 +703,10 @@
                     },
                     error: function(response) {
                         console.log(response);
+                        alert('Download failed. Please try again.');
+                    },
+                    complete: function() {
+                        setDownloadLoading($btn, false);
                     }
                 });
             })

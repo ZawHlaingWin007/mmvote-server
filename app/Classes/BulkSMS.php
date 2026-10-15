@@ -53,10 +53,11 @@ class BulkSMS
             "to" => $mobileNumber,
             "message" => $message,
             "sender" => $sms_sender,
+            "from" => $sms_sender,
             "clientReference" => (string) rand(1, 999),
-            "deliveryReceiptUrl" => 'https://maex.mmvote.online/api/sms/call-back/status'
+            "deliveryReceiptUrl" => url('/api/sms/call-back/status')
         ];
-        // "deliveryReceiptUrl" => url('/api/sms/call-back/status')
+        // "deliveryReceiptUrl" => 'https://evoting.mtshmyanmar.com/api/sms/call-back/status'
 
         // Initialize cURL and send the request
         $ch = curl_init($sms_api_url);

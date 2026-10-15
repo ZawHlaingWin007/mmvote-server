@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Config;
 
 class BulkEmail{
-    public static function sendEmail($emails,$voter,$type = null,$url = null){
-       
+    public static function sendEmail($emails,$voter,$type = null,$url = null)
+    {
+
         $setting = Setting::first();
         
         if($voter)
@@ -18,21 +19,18 @@ class BulkEmail{
 
             if($type == 'reminder')
             {
-                $content = ($setting->reminder_text == null) ? Lang::get('message.reminder') :
-                str_replace(['[:VoterName]', '[:ShareCount]'], [$voter->name, "(" . $voter->vote_count . ")"], $setting->reminder_text);
+                $template = $setting->reminder_text == null ? Lang::get('message.reminder') : $setting->reminder_text;
             } else if ($type == 'member_announce') {
-                $content = ($setting->member_annouce == null) ? Lang::get('message.annouce') :
-                    str_replace(['[:MemberName]', '[:ShareCount]'], [$voter->name], $setting->member_annouce);
+                $template = $setting->member_annouce == null ? Lang::get('message.annouce') : $setting->member_annouce;
             } else if ($type == 'voter_announce') {
-                $content = ($setting->voter_annouce == null) ? Lang::get('message.annouce') :
-                    str_replace(['[:VoterName]', '[:ShareCount]'], [$voter->name], $setting->voter_annouce);
+                $template = $setting->voter_annouce == null ? Lang::get('message.annouce') : $setting->voter_annouce;
             } else if($type == 'member'){
-                $content = ($setting->member_sms_text == null) ? Lang::get('message.member') .$url. Lang::get('message.contact'):
-                str_replace('[:MemberName]', $voter->name, $setting->member_sms_text);
+                $template = $setting->member_sms_text == null ? Lang::get('message.member') .$url. Lang::get('message.contact') : $setting->member_sms_text;
             }else{
-                $content = ($setting->sms_text == null) ? Lang::get('message.text') :
-                str_replace(['[:VoterName]', '[:ShareCount]'], [$voter->name, "(" . $voter->vote_count . ")"], $setting->sms_text);
+                $template = $setting->sms_text == null ? Lang::get('message.text') : $setting->sms_text;
             }
+
+            $content = self::applyPlaceholders($template, $voter);
 
             $time = Carbon::now();
             $datetime = $time->toDateTimeString();
@@ -87,5 +85,32 @@ class BulkEmail{
         } else {
             return response()->json(['success' => 'Message Send Successfully.']);
         }
+    }
+
+    private static function applyPlaceholders($text, $voter)
+    {
+        $text = html_entity_decode((string) $text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        $name = isset($voter->name) ? (string) $voter->name : '';
+        $share = isset($voter->vote_count) ? (string) $voter->vote_count : '';
+
+        $text = preg_replace_callback(
+            '/\[\s*:?\s*(?:<[^>]*>\s*)*(?:VoterName|MemberName)(?:\s*<[^>]*>)*\s*\]/iu',
+            function () use ($name) {
+                return $name;
+            },
+            $text
+        );
+
+        $text = preg_replace_callback(
+            '/\[\s*:?\s*(?:<[^>]*>\s*)*ShareCount(?:\s*<[^>]*>)*\s*\]/iu',
+            function () use ($share) {
+                return $share;
+            },
+            $text
+        );
+
+        return $text;
     }
 }

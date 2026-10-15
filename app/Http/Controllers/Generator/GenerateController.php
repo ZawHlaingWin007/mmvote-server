@@ -164,24 +164,42 @@ class GenerateController extends Controller
     }
 
     public function sendMessage(Request $request)
-    {        
-        if ($request->check_val) {
-            Log::info('Getting Request => ', $request->all());
+    {
+        $payload = $request->all();
+
+        if ($request->type === 'all_reminder') {
+            if (!$request->filled('election_id')) {
+                return response()->json(['errors' => 'Please select an election first.']);
+            }
+
+            $payload['check_val'] = ElectionVoter::where('election_id', $request->election_id)
+                ->where(function ($query) {
+                    $query->where('done', 0)->orWhereNull('done');
+                })
+                ->pluck('voter_id')
+                ->all();
+
+            if (count($payload['check_val']) === 0) {
+                return response()->json(['errors' => 'No voters who have not voted for this election.']);
+            }
+        }
+
+        if (!empty($payload['check_val'])) {
+            Log::info('Getting Request => ', $payload);
             $setting = Setting::first();
             if($request->method == 'sms')
             {
-                SMSServiceJob::dispatch($request->all());
+                SMSServiceJob::dispatch($payload);
             }elseif($request->method == 'email')
             {
-                MailServiceJob::dispatch($setting,$request->all());
+                MailServiceJob::dispatch($setting,$payload);
             }else{
-                SMSServiceJob::dispatch($request->all());
-                MailServiceJob::dispatch($setting,$request->all());
-            }            
+                SMSServiceJob::dispatch($payload);
+                MailServiceJob::dispatch($setting,$payload);
+            }
+        } else {
+            Log::info('User Dont Select => ', $request->all());
         }
-
-        Log::info('User Dont Select => ', $request->all());
-
 
         return response()->json(['success' => $request->method == 'sms' ? 'SMS are sending!' : ($request->method == 'email' ? 'Emails are sending!' : 'SMS and Emails are sending now!') ]);
     }    

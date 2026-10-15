@@ -83,6 +83,19 @@
     #FAQ .notice-box .notice-names:last-child {
         margin-bottom: 0;
     }
+
+    #FAQ .submit-wrap {
+        padding: 16px 12px 24px;
+    }
+
+    #FAQ #btn_submit {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 16px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 8px;
+    }
 </style>
 @endsection
 @section('content')
@@ -147,10 +160,7 @@
                                             style="object-fit: cover; object-position: top center;"> </a>
                                     <div class="ml-3">
                                         {{ $data->name }} <br> <br>
-                                        {!! strlen(strip_tags($data->description)) > 60
-                                        ? substr(strip_tags($data->description), 0, 60) . '...'
-                                        : $data->description !!} <br>
-                                        <a
+                                        {!! \App\Support\HtmlWordTruncator::truncate($data->description, 10) !!} <br>                                        <a
                                             href="{{ route('vote.faq.detail', ['election_id' => $election->id, 'id' => $data->id]) }}">See
                                             more</a>
                                     </div>
@@ -187,10 +197,11 @@
             </div>
             @endforeach
         </div>
-        <div class="col-sm-12 text-center">
+        <div class="col-12 submit-wrap">
             <button
+                type="button"
                 id="btn_submit"
-                class="btn btn-info">Submit</button>
+                class="btn btn-info btn-lg btn-block">Submit</button>
         </div>
     </div>
 </div>
@@ -245,8 +256,7 @@
                     padding: '20%',
                 },
                 baseZ: 2000,
-                message: '<img src="{{ url('
-                images / loader.gif ') }}" width="150" />',
+                message: '<img src="{{ url("images/loader.gif") }}" width="150" alt="" />',
             });
 
             var i;

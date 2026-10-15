@@ -7,14 +7,13 @@
     text-decoration: none;
 }
 
-#app-body .header-img{
-    width:10%!important;
+#app-body .header-img {
+    width: 10% !important;
 }
 
-@media(max-width:768px)
-{
-    #app-body .header-img{
-        width:30%!important;
+@media (max-width: 768px) {
+    #app-body .header-img {
+        width: 30% !important;
     }
 }
 
@@ -31,7 +30,7 @@
 }
 
 #app-body .input {
-    width: 100%!important;
+    width: 100% !important;
 }
 
 #app-body input[type=checkbox] {
@@ -57,7 +56,7 @@
 }
 
 #app-body .paddT {
-    background-image: url('{{url('images/login-bg.jpg')}}');
+    background-image: url("/images/login-bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 100px;
@@ -74,8 +73,8 @@
 }
 
 #app-body .content {
-    background-image:url('{{asset('img/bg-content.jpg')}}');
-    background-position: fixed;
+    background-image: url("/img/bg-content.jpg");
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
@@ -87,7 +86,7 @@
 #app-body .bg {
     background-color: rgb(0, 0, 0);
     /* Fallback color */
-    background-color: rgba(0, 0, 0, 0,.4);
+    background-color: rgba(0, 0, 0, 0.4);
     /* Black w/opacity/see-through */
     color: white;
     font-weight: bold;
@@ -111,8 +110,7 @@
     position: relative;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap;
-    wrap;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     -ms-flex-align: center;
     align-items: center;
@@ -141,7 +139,7 @@
 }
 
 #app-body .count-checkboxes-wrapper {
-	width:80%;
+    width: 80%;
     height: 44px;
 }
 
@@ -150,9 +148,9 @@
 }
 
 #app-body .abtn {
-    height:44px;
-    font-weight:bold;
-    border-radius: 0px!important;
+    height: 44px;
+    font-weight: bold;
+    border-radius: 0px !important;
     padding: 1px 5px 11px 5px;
 }
 
@@ -164,7 +162,7 @@
 }
 
 #app-body .card-body {
-    padding: 0px 10px 0px 10px!important;
+    padding: 0px 10px 0px 10px !important;
 }
 
 #app-body .c-image {
@@ -185,7 +183,7 @@
 }
 
 #app-body .table td {
-    padding: .30rem!important;
+    padding: .30rem !important;
 }
 
 #app-body .px-10 {
@@ -193,13 +191,13 @@
 }
 
 #app-body .check_div {
-    padding: 10px 20px 0px 0px!important;
+    padding: 10px 20px 0px 0px !important;
     margin: 0px 0px 0px 0px;
 }
 
 #app-body .rounded-image {
     width: 30%;
-    height:300px;
+    height: 300px;
 }
 
 #app-body .reponsive-image {
@@ -216,79 +214,72 @@
     color: black;
 }
 
-#app-body .footer .footer-copyright{
-    color:white;
+#app-body .footer .footer-copyright {
+    color: white;
 }
 
-#app-body .footer .container a{
-    text-decoration:none;
-    color:white;
-    font-family:'Times New Roman', Times, serif
+#app-body .footer .container a {
+    text-decoration: none;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-#app-body .login-panel{
-    padding-left: 300px!important;
+#app-body .login-panel {
+    padding-left: 300px !important;
 }
 
-@media only screen and (min-width: 800px ) {
+@media only screen and (min-width: 800px) {
     #app-body .abtn {
-        width:100%!important;
-        float: center;
+        width: 100% !important;
     }
-        #app-body .count-checkboxes-wrapper {
-         width:80%;
-        float: center;
-    }
-}
-@media only screen and (max-width: 900px ) {
-    #app-body .abtn {
-        width:90%;
-        float: center;
-    }
-        #app-body .count-checkboxes-wrapper {
-         width:80%;
-        float: center;
+
+    #app-body .count-checkboxes-wrapper {
+        width: 80%;
     }
 }
-@media only screen and (min-width: 740px ) {
+
+@media only screen and (max-width: 900px) {
     #app-body .abtn {
-        width:100%!important;
-        float: center;
+        width: 90%;
     }
-        #app-body .count-checkboxes-wrapper {
-         width:80%;
-        float: center;
+
+    #app-body .count-checkboxes-wrapper {
+        width: 80%;
     }
 }
-@media only screen and (max-width: 800px ) {
+
+@media only screen and (min-width: 740px) {
     #app-body .abtn {
-        width:80%;
-        float: center;
+        width: 100% !important;
     }
-        #app-body .count-checkboxes-wrapper {
-         width:80%;
-        float: center;
+
+    #app-body .count-checkboxes-wrapper {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #app-body .abtn {
+        width: 80%;
+    }
+
+    #app-body .count-checkboxes-wrapper {
+        width: 80%;
     }
 
 }
 
-@media only screen and (max-width:1000px)
-{
-    #app-body .login-panel{
-        padding-left: 0px!important;
+@media only screen and (max-width: 1000px) {
+    #app-body .login-panel {
+        padding-left: 0px !important;
     }
 }
+
 @media only screen and (min-width: 600px) {
     #app-body .middle-card {
         display: flex;
         justify-content: center;
         flex-direction: row;
-    }
-    #app-body .count-checkboxes-wrapper {
-        float: center;
-    }
-    #app-body .abtn {
-        float: center;
     }
 }
 
@@ -297,54 +288,61 @@
     #app-body .card {
         margin: 0px 20px 0px 20px;
     }
+
     #app-body .reponsive-image {
         text-align: center;
         width: 40%;
     }
+
     #app-body .responsive {
         padding-top: 0rem !important;
     }
+
     #app-body .rounded-image {
         width: 80%;
-        height:200px;
-        text-align: center!important;
+        height: 200px;
+        text-align: center !important;
         vertical-align: center;
         justify-content: center;
     }
+
     #app-body .pdt-3 {
         padding-top: 1rem;
     }
+
     #app-body .login-btn {
         margin: 15px 0px 0px 0px;
     }
+
     #app-body .count-checkboxes-wrapper {
         width: 80%;
         height: 44px;
     }
+
     #app-body .abtn {
         width: 80%;
     }
 
-    #app-body .footer .footer-copyright{
-    color:white;
-    font-size:10px!important;
+    #app-body .footer .footer-copyright {
+        color: white;
+        font-size: 10px !important;
+    }
+
+    #app-body #center-body {
+        text-align: center !important;
+    }
+
+    #app-body .footer .container a {
+        text-decoration: none;
+        color: white;
+        font-size: 10px !important;
+        font-family: 'Times New Roman', Times, serif;
+    }
 }
 
-#app-body #center-body{
-    text-align:center!important;
-}
-
-#app-body .footer .container a{
-    text-decoration:none;
-    color:white;
-    font-size:10px!important;
-    font-family:'Times New Roman', Times, serif
-}
-}
-
-#app-body .hover-card:hover{
+#app-body .hover-card:hover {
     background-color: #044462;
-    color:white!important;
+    color: white !important;
     transition: 0.8s;
     transform: scale(1.02);
     cursor: pointer;
@@ -358,11 +356,11 @@
     margin-right: 0.5rem;
 }
 
-#app-body .heading-card{
-    width:100%;
-    height:40px!important;
-    padding-left:20px;
-    background:#044462;
+#app-body .heading-card {
+    width: 100%;
+    height: 40px !important;
+    padding-left: 20px;
+    background: #044462;
 }
 
 .label {
@@ -381,15 +379,18 @@
 /* MAEX Update*/
 #app-body .navbar {
     /* background-color: #17a2b8; */
-    background-color: #02813E !important;
+    background-color: #0094E3 !important;
     justify-content: center;
 }
+
 #app-body #complete_page {
-    background: #02813E !important;
+    background: #0094E3 !important;
 }
+
 .btn-info {
-    background-color: #02813E !important;
+    background-color: #0094E3 !important;
 }
+
 #start-bg-info {
-    background-color: #02813E !important;
+    background-color: #0094E3 !important;
 }

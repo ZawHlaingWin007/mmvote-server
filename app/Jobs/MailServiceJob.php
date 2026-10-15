@@ -51,7 +51,13 @@ class MailServiceJob implements ShouldQueue
             $type = null;
         }
 
-        Voter::whereIn('id', $this->data['check_val'])->with('electionVoter')->get()->each(function ($voter) use ($type, $setting) {            
+        Voter::whereIn('id', $this->data['check_val'])->with('electionVoter')->get()->each(function ($voter) use ($type, $setting) {
+            $email = trim((string) $voter->email);
+            if ($email === '') {
+                Log::info('Skipping mail, voter has no email address', ['voter_id' => $voter->id]);
+                return;
+            }
+
             $url = route('vote.link', ['voter_id' => $voter->voter_id]);
 
             if ($type == 'reminder') {
@@ -97,13 +103,19 @@ class MailServiceJob implements ShouldQueue
     }
 
     public function create($voter,$response,$type)
-    {        
+    {
+        $messageTo = trim((string) $voter->email);
+        if ($messageTo === '') {
+            Log::info('Skipping mail log, message_to is empty', ['voter_id' => $voter->id]);
+            return;
+        }
+
         AppLog::create([
             'voter_id' => $voter->id,
             'type' => $type != null ? 'mail_reminder' : 'mail',
             'key' => 'status',
-            'value' => $response,
-            'message_to' => $voter->email,
+            'value' => $response ?: 'UNDELIVERED',
+            'message_to' => $messageTo,
         ]);
     }
 }

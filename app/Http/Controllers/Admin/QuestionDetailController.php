@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Question;
 use App\QuestionDetail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class QuestionDetailController extends Controller
 {
@@ -126,6 +127,7 @@ class QuestionDetailController extends Controller
 
     public function update(Request $request,$id)
     {                
+Log::debug("REQUEST ALL", [$request->all()]);
         $rules = array(
             'name'    =>  'required|string|max:255',            
             'description'         =>  'required',
